@@ -6,6 +6,8 @@ const initialaState = {
   total_pages: 0,
   total_results: 0,
   searchText: "",
+  isResult: true,
+  error: "",
 };
 
 const movieSearchReducer = (state = initialaState, action) => {
@@ -19,6 +21,16 @@ const movieSearchReducer = (state = initialaState, action) => {
       return {
         ...state,
         searchText: action.searchText,
+      };
+    case IS_RESULT:
+      return {
+        ...state,
+        isResult: action.isResult,
+      };
+    case SET_ERROR:
+      return {
+        ...state,
+        error: action.error,
       };
     default:
       return state;
@@ -38,15 +50,24 @@ export const setSearchTextAC = (searchText) => ({
   searchText,
 });
 
-export const getMovies = () => (dispatch, getState) => {
+const IS_RESULT = "IS_RESULT";
+const isResultAC = (isResult) => ({ type: IS_RESULT, isResult });
+const SET_ERROR = "SET_ERROR";
+const setErrorAC = (error) => ({ type: SET_ERROR, error });
+
+export const getMovies = (currentPage) => (dispatch, getState) => {
   const searchText = getState().movieSearchReducer.searchText;
   searchAPI
-    .searchMovies(searchText)
+    .searchMovies(searchText, currentPage)
     .then((response) => {
       let { page, results, total_results, total_pages } = response.data;
       dispatch(setMoviesFullInfoAC(page, results, total_results, total_pages));
+      dispatch(setErrorAC(""));
+      response.data.total_pages
+        ? dispatch(isResultAC(true))
+        : dispatch(isResultAC(false));
     })
-    .catch((err) => {
-      alert(err);
+    .catch((errors) => {
+      dispatch(setErrorAC(errors.message));
     });
 };

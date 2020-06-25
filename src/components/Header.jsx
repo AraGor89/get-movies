@@ -1,12 +1,11 @@
 import React from "react";
 import styles from "./styles.module.scss";
-import tmdb from "../assets/images/tmdb.jpg";
+import logo from "../assets/images/logo.png";
 
 const Header = () => {
   return (
     <div className={styles.header}>
-      <img src={tmdb} alt="tmdbPIC" className={styles.tmdbIMAGE} />
-      <span className={styles.headerText}>Movies DB search</span>
+      <img src={logo} alt="logo" />
     </div>
   );
 };
