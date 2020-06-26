@@ -12,17 +12,36 @@ import {
   setSearchTextAC,
 } from "../redux/reducers/movieSearchReducer";
 
-const Main = (props) => {
+const Main = ({
+  searchText,
+  currentPage,
+  movies,
+  totalPages,
+  isResult,
+  error,
+  setSearchTextAC,
+  getMovies,
+}) => {
   return (
     <div className="main">
       <Header />
-      <Pagination {...props} />
-      <SearchInput {...props} />
+      <Pagination
+        searchText={searchText}
+        getMovies={getMovies}
+        totalPages={totalPages}
+        currentPage={currentPage}
+        movies={movies}
+      />
+      <SearchInput
+        searchText={searchText}
+        setSearchTextAC={setSearchTextAC}
+        getMovies={getMovies}
+      />
       <br />
-      {props.error ? (
-        <Error {...props} />
+      {error ? (
+        <Error error={error} />
       ) : (
-        <div> {props.isResult ? <Lists {...props} /> : <NoResult />}</div>
+        <div> {isResult ? <Lists movies={movies} /> : <NoResult />}</div>
       )}
     </div>
   );
@@ -32,7 +51,6 @@ const mapStateToProps = (state) => ({
   currentPage: state.movieSearchReducer.page,
   movies: state.movieSearchReducer.results,
   totalPages: state.movieSearchReducer.total_pages,
-  totalResults: state.movieSearchReducer.total_results,
   isResult: state.movieSearchReducer.isResult,
   error: state.movieSearchReducer.error,
 });

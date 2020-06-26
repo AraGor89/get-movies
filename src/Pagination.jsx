@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-const Pagination = ({ getMovies, totalPages, currentPage }) => {
+const Pagination = ({
+  getMovies,
+  totalPages,
+  currentPage,
+  searchText,
+  movies,
+}) => {
   let [portionSize, setPortionSize] = useState(10);
   let portion = Math.ceil(currentPage / portionSize);
   let portionCount = Math.ceil(totalPages / portionSize);
@@ -20,13 +26,15 @@ const Pagination = ({ getMovies, totalPages, currentPage }) => {
     return () => {
       window.removeEventListener("resize", resizeHandler);
     };
-  }, [window.innerWidth]);
+  }, []);
   let pages = [];
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
   }
   const handlePageChange = (page) => {
-    getMovies(page);
+    if (searchText) {
+      getMovies(page);
+    }
   };
 
   return (
