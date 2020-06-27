@@ -8,7 +8,6 @@ const Pagination = ({ getMovies, totalPages, currentPage, searchText }) => {
   let [portionNumber, setPortionNumber] = useState(portion);
   let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
   let rightPortionPageNumber = portionNumber * portionSize;
-  console.log(totalPages, currentPage, searchText, portion);
 
   const resizeHandler = () => {
     window.innerWidth <= 900 ? setPortionSize(5) : setPortionSize(10);
