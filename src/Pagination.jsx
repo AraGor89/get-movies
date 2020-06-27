@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-const Pagination = ({
-  getMovies,
-  totalPages,
-  currentPage,
-  searchText,
-  movies,
-}) => {
+const Pagination = ({ getMovies, totalPages, currentPage, searchText }) => {
   let [portionSize, setPortionSize] = useState(10);
   let portion = Math.ceil(currentPage / portionSize);
   let portionCount = Math.ceil(totalPages / portionSize);
   let [portionNumber, setPortionNumber] = useState(portion);
   let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
   let rightPortionPageNumber = portionNumber * portionSize;
+  console.log(totalPages, currentPage, searchText, portion);
 
   const resizeHandler = () => {
     window.innerWidth <= 900 ? setPortionSize(5) : setPortionSize(10);

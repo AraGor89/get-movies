@@ -30,7 +30,6 @@ const Main = ({
         getMovies={getMovies}
         totalPages={totalPages}
         currentPage={currentPage}
-        movies={movies}
       />
       <SearchInput
         searchText={searchText}

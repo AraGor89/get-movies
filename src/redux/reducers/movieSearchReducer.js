@@ -21,6 +21,9 @@ const movieSearchReducer = (state = initialaState, action) => {
       return {
         ...state,
         searchText: action.searchText,
+        results: [],
+        total_pages: 0,
+        page: 1,
       };
     case IS_RESULT:
       return {
