@@ -13,6 +13,9 @@ const Pagination = ({ getMovies, totalPages, currentPage, searchText }) => {
     window.innerWidth <= 900 ? setPortionSize(5) : setPortionSize(10);
   };
   useEffect(() => {
+    setPortionNumber(1);
+  }, [searchText]);
+  useEffect(() => {
     resizeHandler();
   }, []);
   useEffect(() => {
