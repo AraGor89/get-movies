@@ -8,6 +8,7 @@ const initialaState = {
   searchText: "",
   isResult: true,
   error: "",
+  isFetching: false,
 };
 
 const movieSearchReducer = (state = initialaState, action) => {
@@ -35,6 +36,11 @@ const movieSearchReducer = (state = initialaState, action) => {
         ...state,
         error: action.error,
       };
+    case TOGGLE_IS_FETCHING:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+      };
     default:
       return state;
   }
@@ -53,6 +59,11 @@ export const setSearchTextAC = (searchText) => ({
   searchText,
 });
 
+const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
+export const toggleIsFetching = (isFetching) => ({
+  type: TOGGLE_IS_FETCHING,
+  isFetching,
+});
 const IS_RESULT = "IS_RESULT";
 const isResultAC = (isResult) => ({ type: IS_RESULT, isResult });
 const SET_ERROR = "SET_ERROR";
@@ -60,12 +71,14 @@ const setErrorAC = (error) => ({ type: SET_ERROR, error });
 
 export const getMovies = (currentPage) => (dispatch, getState) => {
   const searchText = getState().movieSearchReducer.searchText;
+  dispatch(toggleIsFetching(true));
   searchAPI
     .searchMovies(searchText, currentPage)
     .then((response) => {
       let { page, results, total_results, total_pages } = response.data;
       dispatch(setMoviesFullInfoAC(page, results, total_results, total_pages));
       dispatch(setErrorAC(""));
+      dispatch(toggleIsFetching(false));
       response.data.total_pages
         ? dispatch(isResultAC(true))
         : dispatch(isResultAC(false));

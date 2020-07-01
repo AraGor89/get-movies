@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import Header from "./Header";
-import Pagination from "./../Pagination";
+import Pagination from "./Pagination";
 import SearchInput from "./SearchInput";
 import Lists from "./Lists";
 import Error from "./Error";
 import NoResult from "./NoResult";
-
+import Loading from "./Loading";
 import {
   getMovies,
   setSearchTextAC,
@@ -21,6 +21,7 @@ const Main = ({
   error,
   setSearchTextAC,
   getMovies,
+  isFetching,
 }) => {
   return (
     <div className="main">
@@ -36,11 +37,16 @@ const Main = ({
         setSearchTextAC={setSearchTextAC}
         getMovies={getMovies}
       />
-      <br />
       {error ? (
         <Error error={error} />
       ) : (
-        <div> {isResult ? <Lists movies={movies} /> : <NoResult />}</div>
+        <div>
+          {isFetching ? (
+            <Loading />
+          ) : (
+            <div>{isResult ? <Lists movies={movies} /> : <NoResult />}</div>
+          )}
+        </div>
       )}
     </div>
   );
@@ -52,6 +58,7 @@ const mapStateToProps = (state) => ({
   totalPages: state.movieSearchReducer.total_pages,
   isResult: state.movieSearchReducer.isResult,
   error: state.movieSearchReducer.error,
+  isFetching: state.movieSearchReducer.isFetching,
 });
 
 export default connect(mapStateToProps, { getMovies, setSearchTextAC })(Main);
