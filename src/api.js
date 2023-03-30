@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseURL = "https://api.themoviedb.org/3/";
-const apiKey = "1b8033f1e7b194b6febf10ac6410336b";
+const baseURL = process.env.REACT_APP_BASE_URL;
+const apiKey = process.env.REACT_APP_API_KEY;
 
 export const searchAPI = {
   searchMovies(movieName, page = 1) {

@@ -3,7 +3,8 @@ import styles from "./styles.module.scss";
 import tmdb from "../assets/images/tmdb.jpg";
 
 const ListItemsContainer = ({ movie }) => {
-  const imgBaseUrl = "https://image.tmdb.org/t/p/w185";
+  const imgBaseUrl = process.env.REACT_APP_IMG_BASE_URL;
+
   return (
     <div className={styles.listItemsContainer}>
       <div className={styles.imageContainer}>
@@ -43,7 +44,7 @@ const ListItemsContainer = ({ movie }) => {
         </span>
         <br />
         <a href={"https://www.themoviedb.org/movie/" + movie.id} target="blank">
-          <button>View movie</button>
+          <button>View details</button>
         </a>
       </div>
     </div>

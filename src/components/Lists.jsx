@@ -5,10 +5,9 @@ import ListItemsContainer from "./ListItemsContainer";
 const Lists = ({ movies }) => {
   return (
     <div className={styles.listsContainer}>
-      {movies &&
-        movies.map((movie) => (
-          <ListItemsContainer movie={movie} key={movie.id} />
-        ))}
+      {movies.map((movie) => (
+        <ListItemsContainer movie={movie} key={movie.id} />
+      ))}
     </div>
   );
 };

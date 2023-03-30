@@ -5,6 +5,7 @@
 }
 body {
   background-color: #d4d4d2;
+  min-width: 500px;
 }
 .App {
   width: 80%;

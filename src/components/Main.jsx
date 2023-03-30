@@ -7,35 +7,36 @@ import Lists from "./Lists";
 import Error from "./Error";
 import NoResult from "./NoResult";
 import Loading from "./Loading";
-import {
-  getMovies,
-  setSearchTextAC,
-} from "../redux/reducers/movieSearchReducer";
+import { resetAC, getMovies, setSearchTextAC } from "../redux/actions";
 
 const Main = ({
+  error,
+  movies,
+  resetAC,
+  isResult,
+  getMovies,
+  totalPages,
+  isFetching,
   searchText,
   currentPage,
-  movies,
-  totalPages,
-  isResult,
-  error,
+  total_results,
   setSearchTextAC,
-  getMovies,
-  isFetching,
 }) => {
   return (
     <div className="main">
       <Header />
       <Pagination
-        searchText={searchText}
         getMovies={getMovies}
         totalPages={totalPages}
+        searchText={searchText}
         currentPage={currentPage}
       />
       <SearchInput
-        searchText={searchText}
-        setSearchTextAC={setSearchTextAC}
+        resetAC={resetAC}
         getMovies={getMovies}
+        searchText={searchText}
+        total_results={total_results}
+        setSearchTextAC={setSearchTextAC}
       />
       {error ? (
         <Error error={error} />
@@ -52,13 +53,18 @@ const Main = ({
   );
 };
 const mapStateToProps = (state) => ({
-  searchText: state.movieSearchReducer.searchText,
-  currentPage: state.movieSearchReducer.page,
-  movies: state.movieSearchReducer.results,
-  totalPages: state.movieSearchReducer.total_pages,
-  isResult: state.movieSearchReducer.isResult,
   error: state.movieSearchReducer.error,
+  movies: state.movieSearchReducer.results,
+  currentPage: state.movieSearchReducer.page,
+  isResult: state.movieSearchReducer.isResult,
+  searchText: state.movieSearchReducer.searchText,
   isFetching: state.movieSearchReducer.isFetching,
+  totalPages: state.movieSearchReducer.total_pages,
+  total_results: state.movieSearchReducer.total_results,
 });
 
-export default connect(mapStateToProps, { getMovies, setSearchTextAC })(Main);
+export default connect(mapStateToProps, {
+  resetAC,
+  getMovies,
+  setSearchTextAC,
+})(Main);
